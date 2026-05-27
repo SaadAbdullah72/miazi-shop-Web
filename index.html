@@ -1,199 +1,556 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miazi Shop — Official App Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" href="logo-512.png">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0b0f17;
+            background-color: #ffffff;
         }
+
         .glass-card {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            box-shadow: 0 20px 40px -15px rgba(217, 119, 6, 0.05), 0 4px 12px rgba(0, 0, 0, 0.01);
         }
+
         .tab-btn {
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .tab-active {
-            background: #fed700;
-            color: #0b0f17;
-            box-shadow: 0 8px 16px -4px rgba(254, 215, 0, 0.2);
+            background: #d97706;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+        }
+
+        .poster-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+        }
+
+        .poster-slide.active {
+            opacity: 1;
+            z-index: 20;
+        }
+
+        #notification-panel {
+            transform: translate(-50%, 150%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #notification-panel.show {
+            transform: translate(-50%, 0);
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-200 py-10 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden flex flex-col justify-between">
-    
-    <!-- Decorative Lights -->
-    <div class="absolute top-[-30%] left-[-20%] w-[80%] h-[80%] rounded-full bg-yellow-400/5 blur-[160px] pointer-events-none"></div>
-    <div class="absolute bottom-[-30%] right-[-20%] w-[80%] h-[80%] rounded-full bg-amber-500/5 blur-[160px] pointer-events-none"></div>
 
-    <!-- Header Section -->
-    <div class="w-full max-w-5xl mx-auto flex justify-center mb-10 shrink-0">
-        <img src="logo.png" alt="Miazi Shop" class="h-12 sm:h-16 object-contain">
+<body
+    class="min-h-screen text-slate-700 py-6 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden flex flex-col justify-between antialiased">
+
+    <div
+        class="absolute top-[-10%] left-[-10%] w-[60%] h-[50%] rounded-full bg-amber-400/10 blur-[120px] pointer-events-none">
+    </div>
+    <div
+        class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[50%] rounded-full bg-yellow-300/15 blur-[120px] pointer-events-none">
     </div>
 
-    <!-- Main Container -->
-    <div class="w-full max-w-4xl mx-auto my-auto relative z-10">
-        
-        <!-- Responsive Flex Grid -->
-        <div class="flex flex-col md:flex-row items-center justify-center gap-10 lg:gap-14">
-            
-            <!-- Left Column: Standalone App Mockup -->
-            <div class="flex justify-center w-full max-w-[240px] md:max-w-[250px] shrink-0">
-                <div class="relative w-full">
-                    <!-- Outer shadow glow -->
-                    <div class="absolute inset-0 bg-yellow-400/5 rounded-[2.8rem] blur-3xl pointer-events-none"></div>
-                    
-                    <!-- Phone frame -->
-                    <div class="relative w-full h-[470px] bg-[#0d121f] rounded-[2.8rem] p-3 shadow-2xl border-[4px] border-slate-800/90 overflow-hidden flex flex-col justify-between">
-                        
-                        <!-- Top Notch -->
-                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-4 bg-slate-900 rounded-b-xl z-20 flex items-center justify-center">
-                            <div class="w-8 h-0.5 bg-slate-800 rounded-full"></div>
+    <header class="w-full max-w-5xl mx-auto flex justify-center mb-8 sm:mb-16 shrink-0 relative z-10">
+        <img src="logo.png" alt="Miazi Shop"
+            class="h-10 sm:h-14 object-contain transition-transform duration-300 hover:scale-105">
+    </header>
+
+    <main class="w-full max-w-6xl mx-auto my-auto relative z-10 pb-12 flex-1 flex items-center justify-center">
+    <div class="w-full flex flex-col lg:flex-row items-center justify-center gap-10 xl:gap-16 px-4">
+
+        <div class="flex justify-center w-full max-w-[380px] sm:max-w-[480px] lg:max-w-[500px] shrink-0">
+            <div class="relative w-full">
+                <div class="absolute inset-0 bg-amber-500/5 rounded-[3rem] blur-3xl pointer-events-none"></div>
+
+                <div class="relative w-full aspect-square bg-slate-900 rounded-[2.8rem] p-4 shadow-2xl ring-1 ring-slate-900/10 flex flex-col justify-between mx-auto">
+
+                    <div class="absolute top-3 left-1/2 transform -translate-x-1/2 z-50">
+                        <div class="w-12 h-1 bg-slate-950 rounded-full"></div>
+                    </div>
+
+                    <div id="poster-container"
+                        class="relative h-full w-full rounded-[2.2rem] overflow-hidden bg-slate-950 flex flex-col justify-between border border-slate-800/5 group select-none pl-2">
+
+                        <div class="absolute top-5 left-0 right-0 z-30 flex justify-between items-center px-6 pointer-events-none">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-white/80 bg-slate-950/50 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                                Canvas Preview
+                            </span>
+                            <div class="flex items-center gap-1.5 bg-slate-950/50 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                <span class="text-[9px] font-bold text-white/90">Showcase Studio</span>
+                            </div>
                         </div>
 
-                        <!-- Phone Inner Screen -->
-                        <div class="relative h-full w-full rounded-[2.2rem] overflow-hidden bg-slate-950 flex flex-col justify-between p-5 border border-white/5">
-                            
-                            <div class="flex justify-between items-center mt-2">
-                                <span class="text-[8px] font-bold uppercase tracking-widest text-slate-600">Mobile Store</span>
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                            </div>
+                        <div id="poster-placeholder"
+                            class="absolute inset-0 flex grid-cols-1 md:grid-cols-2 items-center justify-between p-10 pt-20 pb-24 z-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 gap-8">
 
-                            <!-- Logo Showcase -->
-                            <div class="text-center my-auto space-y-4">
-                                <div class="w-16 h-16 bg-white rounded-2xl mx-auto flex items-center justify-center shadow-lg border border-slate-800 p-2.5">
-                                    <img src="logo-512.png" alt="Miazi Icon" class="w-full h-full object-contain rounded-xl">
+                            <div class="space-y-3 text-left max-w-sm mx-auto md:mx-0">
+                                <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-amber-400/70 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
                                 </div>
-                                <div class="space-y-0.5">
-                                    <h3 class="text-white text-base font-extrabold tracking-tight">Miazi Shop</h3>
-                                    <p class="text-slate-500 text-[8px] uppercase font-bold tracking-widest">Premium Store App</p>
+                                <div>
+                                    <p class="text-[13px] font-black text-white/90 tracking-wider uppercase">No Slides Found</p>
+                                    <p class="text-[11px] text-white/50 max-w-[280px] mt-1.5 leading-relaxed">
+                                        Please access the Admin Panel below to upload app mockups directly into this device display.
+                                    </p>
                                 </div>
                             </div>
 
-                            <!-- Screen Footer CTA -->
-                            <div class="h-9 w-full bg-yellow-400 text-slate-950 rounded-xl flex items-center justify-center font-extrabold text-[9px] tracking-wider uppercase shadow-md shadow-yellow-400/5">
-                                Download & Install
+                            <div class="hidden md:flex flex-1 h-full border border-dashed border-white/10 rounded-2xl items-center justify-center bg-slate-950/40 backdrop-blur-sm">
+                                <span class="text-[10px] text-white/20 tracking-widest uppercase">Empty Workspace Slot</span>
                             </div>
-
                         </div>
+
+                        <div class="absolute bottom-5 left-6 right-6 z-30 pointer-events-auto flex justify-start">
+                            <button onclick="toggleNotificationBox()"
+                                class="w-full max-w-xs p-2.5 bg-slate-900/90 hover:bg-slate-900 backdrop-blur-md border border-white/10 rounded-xl flex items-center justify-between text-left transition-all active:scale-95 shadow-xl group">
+                                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                    <div class="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-slate-950 relative shrink-0">
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span id="mockup-notif-badge" class="absolute -top-1 -right-1 min-w-[12px] h-3 bg-rose-500 rounded-full text-[7px] font-black flex items-center justify-center border border-slate-900 px-0.5 text-white">1</span>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <p id="mockup-notif-title" class="text-[10px] font-bold text-white tracking-wide truncate">New Updates!</p>
+                                        <p id="mockup-notif-desc" class="text-[8px] text-white/60 truncate">Click to review announcements</p>
+                                    </div>
+                                </div>
+                                <svg class="w-3 h-3 text-amber-400 shrink-0 transform transition-transform group-hover:translate-x-0.5 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Right Column: Interactive App Download Card -->
-            <div class="w-full max-w-md space-y-6">
-                <div class="glass-card rounded-[2rem] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-                    <!-- Amber Glow Line -->
-                    <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-yellow-400 to-amber-500"></div>
-                    
-                    <div class="mb-6 text-center md:text-left">
-                        <span class="text-[9px] font-black text-yellow-400 uppercase tracking-widest">Official Release</span>
-                        <h2 class="text-2xl font-extrabold text-white tracking-tight mt-1">Download Mobile App</h2>
-                        <p class="text-slate-400 text-xs mt-2.5 leading-relaxed">
-                            Install our fast Android application to browse products, track orders, and experience faster checkout.
+        <div class="w-full max-w-md space-y-2">
+            <div class="glass-card rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden bg-white border border-slate-100 shadow-xl">
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-300"></div>
+
+                <div class="mb-6 text-center lg:text-left">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 rounded-full text-[9px] font-black text-amber-700 uppercase tracking-widest border border-amber-100/60">
+                        <span class="w-1 h-1 rounded-full bg-amber-500 animate-ping"></span> Official Release
+                    </span>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-3">Download Mobile App</h1>
+                    <p class="text-slate-500 text-xs sm:text-[13px] mt-2.5 leading-relaxed font-medium">
+                        Install our fast Android application to browse products, track orders, and experience faster checkout.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200/40 mb-5">
+                    <button id="tab-apk" onclick="changeTab('apk')" class="tab-btn tab-active py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest">
+                        APK (Direct)
+                    </button>
+                    <button id="tab-aab" onclick="changeTab('aab')" class="tab-btn py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-800">
+                        AAB (Bundle)
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3.5 px-2 bg-slate-50/80 rounded-xl border border-slate-100 mb-6 text-center items-center">
+                    <div class="p-1">
+                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">File Size</p>
+                        <p id="size-text" class="text-xs font-extrabold text-slate-800 mt-1">1.0 MB</p>
+                    </div>
+                    <div class="p-1 border-l border-slate-200/80">
+                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Downloads</p>
+                        <p class="text-xs font-extrabold text-amber-600 mt-1 flex items-center justify-center gap-0.5">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-amber-500">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span id="download-count-val">12+</span>
                         </p>
                     </div>
-
-                    <!-- Clean Segmented Tabs -->
-                    <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-950/80 rounded-xl border border-white/5 mb-6">
-                        <button id="tab-apk" onclick="changeTab('apk')" class="tab-btn tab-active py-2.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest">
-                            APK (Direct)
-                        </button>
-                        <button id="tab-aab" onclick="changeTab('aab')" class="tab-btn py-2.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest text-slate-400 hover:text-slate-200">
-                            AAB (Bundle)
+                    <div class="p-1 border-t sm:border-t-0 border-l-0 sm:border-l border-slate-200/80 col-span-1">
+                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Version</p>
+                        <p class="text-xs font-extrabold text-slate-800 mt-1">1.0.0</p>
+                    </div>
+                    <div class="p-1 border-t sm:border-t-0 border-l border-slate-200/80 col-span-1">
+                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Share File</p>
+                        <button id="copy-btn" onclick="copyFileDownloadLink()" class="mx-auto mt-1 px-2.5 py-0.5 text-[9px] font-bold text-slate-600 hover:text-amber-700 bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-200 rounded-md transition-all flex items-center gap-1 shadow-sm active:scale-95">
+                            <svg id="copy-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span id="copy-text">Copy</span>
                         </button>
                     </div>
-
-                    <!-- Tech Specs -->
-                    <div class="grid grid-cols-3 gap-3 py-3.5 px-4 bg-slate-950/40 rounded-xl border border-white/5 mb-6 text-center">
-                        <div>
-                            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">File Size</p>
-                            <p id="size-text" class="text-xs font-extrabold text-white mt-1">1.4 MB</p>
-                        </div>
-                        <div class="border-x border-white/10">
-                            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Downloads</p>
-                            <p class="text-xs font-extrabold text-yellow-400 mt-1 flex items-center justify-center gap-1">
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7 10 12 15 17 10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                                </svg>
-                                <span id="download-count-val">Loading...</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Version</p>
-                            <p class="text-xs font-extrabold text-white mt-1">1.0.0</p>
-                        </div>
-                    </div>
-
-                    <!-- Optimized Download Button with STRICT SVG sizes -->
-                    <button id="download-trigger" onclick="executeInstall()" class="w-full py-3.5 bg-yellow-400 hover:bg-yellow-300 text-slate-950 rounded-xl font-extrabold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 transition-all duration-300 transform active:scale-[0.98] shadow-lg shadow-yellow-400/5">
-                        <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        <span>Install Now</span>
-                    </button>
-
                 </div>
-            </div>
 
+                <button id="download-trigger" onclick="executeInstall()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2.5 rounded-xl transition-all duration-300 transform active:scale-[0.99] shadow-lg shadow-amber-500/10 group">
+                    <svg class="shrink-0 transform transition-transform duration-300 group-hover:translate-y-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Install Now</span>
+                </button>
+
+            </div>
         </div>
 
     </div>
+</main>
 
-    <!-- Minimal Clean Footer with Contact Info & Socials -->
-    <div class="w-full max-w-4xl mx-auto pt-10 shrink-0 border-t border-white/5 mt-10 text-center space-y-4">
-        <!-- Contact & Support Info -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-xs text-slate-400 font-medium">
-            <a href="https://wa.me/8801632253874" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-emerald-400 transition-colors">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-emerald-400 shrink-0">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.403.002 9.799-4.389 9.802-9.794.002-2.605-1.01-5.059-2.858-6.91A9.702 9.702 0 0 0 12.008 1.62c-5.409 0-9.806 4.394-9.809 9.803-.002 1.706.447 3.376 1.302 4.878l-.924 3.372 3.47-.91zm10.74-4.846c-.28-.14-1.65-.81-1.91-.9-.26-.1-.45-.14-.64.14-.19.28-.74.9-.91 1.1-.17.19-.34.22-.62.08-1.56-.78-2.58-1.4-3.6-3.15-.27-.47.27-.43.77-1.43.08-.16.04-.3-.02-.44-.06-.14-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49-.16-.01-.35-.01-.54-.01-.19 0-.51.07-.78.36-.27.29-1.03 1.01-1.03 2.46s1.05 2.85 1.2 3.05c.15.2 2.07 3.16 5.01 4.43.7.3 1.25.48 1.68.62.7.22 1.34.19 1.84.11.56-.08 1.65-.67 1.88-1.32.23-.65.23-1.21.16-1.32-.07-.12-.26-.18-.54-.32z"/>
+    <div id="notification-panel" class="fixed bottom-6 left-1/2 w-full max-w-sm px-4 z-50 pointer-events-auto">
+        <div
+            class="w-full bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-slate-800 flex items-start gap-3 relative">
+            <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                    </path>
+                </svg>
+            </div>
+            <div class="space-y-1 pr-6 flex-1">
+                <h4 id="panel-notif-title" class="text-xs font-black uppercase tracking-wider text-amber-400">Notice
+                    Announcement</h4>
+                <p id="panel-notif-body" class="text-xs text-slate-300 font-medium leading-relaxed">No custom message
+                    active currently. Set up from panel inputs configuration values.</p>
+            </div>
+            <button onclick="toggleNotificationBox()"
+                class="absolute top-3 right-3 text-slate-400 hover:text-white transition-colors">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <footer
+        class="w-full max-w-4xl mx-auto pt-8 shrink-0 border-t border-slate-100 text-center space-y-5 relative z-10">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 text-xs text-slate-500 font-semibold">
+            <a href="https://wa.me/8801632253874" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-full border border-slate-200/40 shadow-sm hover:text-emerald-600 hover:border-emerald-500/20 hover:bg-emerald-50/50 transition-all duration-200">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-emerald-500 shrink-0">
+                    <path
+                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.403.002 9.799-4.389 9.802-9.794.002-2.605-1.01-5.059-2.858-6.91A9.702 9.702 0 0 0 12.008 1.62c-5.409 0-9.806 4.394-9.809 9.803-.002 1.706.447 3.376 1.302 4.878l-.924 3.372 3.47-.91zm10.74-4.846c-.28-.14-1.65-.81-1.91-.9-.26-.1-.45-.14-.64.14-.19.28-.74.9-.91 1.1-.17.19-.34.22-.62.08-1.56-.78-2.58-1.4-3.6-3.15-.27-.47.27-.43.77-1.43.08-.16.04-.3-.02-.44-.06-.14-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49-.16-.01-.35-.01-.54-.01-.19 0-.51.07-.78.36-.27.29-1.03 1.01-1.03 2.46s1.05 2.85 1.2 3.05c.15.2 2.07 3.16 5.01 4.43.7.3 1.25.48 1.68.62.7.22 1.34.19 1.84.11.56-.08 1.65-.67 1.88-1.32.23-.65.23-1.21.16-1.32-.07-.12-.26-.18-.54-.32z" />
                 </svg>
                 <span>WhatsApp Support: +880 1632-253874</span>
             </a>
         </div>
-        
-        <!-- Social Media Icons -->
-        <div class="flex items-center justify-center gap-4">
-            <a href="https://www.facebook.com/profile.php?id=61562843136238" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-slate-900/60 border border-white/5 flex items-center justify-center text-slate-400 hover:text-yellow-400 hover:border-yellow-400/30 hover:bg-slate-950 transition-all">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+        <div class="flex items-center justify-center gap-3.5">
+            <a href="https://www.facebook.com/profile.php?id=61562843136238" target="_blank" rel="noopener noreferrer"
+                class="w-9 h-9 rounded-full bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-600/30 hover:bg-blue-50/30 transition-all shadow-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
             </a>
-            <a href="https://www.instagram.com/miazi.shop?igsh=MWM3OGE3ZnNld3FvMg==" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-slate-900/60 border border-white/5 flex items-center justify-center text-slate-400 hover:text-yellow-400 hover:border-yellow-400/30 hover:bg-slate-950 transition-all">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <a href="https://www.instagram.com/miazi.shop?igsh=MWM3OGE3ZnNld3FvMg==" target="_blank"
+                rel="noopener noreferrer"
+                class="w-9 h-9 rounded-full bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-400 hover:text-pink-600 hover:border-pink-600/30 hover:bg-pink-50/30 transition-all shadow-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
             </a>
-            <a href="https://vm.tiktok.com/ZS9Y3cE74yKHv-8XYf6/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-slate-900/60 border border-white/5 flex items-center justify-center text-slate-400 hover:text-yellow-400 hover:border-yellow-400/30 hover:bg-slate-950 transition-all">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <a href="https://vm.tiktok.com/ZS9Y3cE74yKHv-8XYf6/" target="_blank" rel="noopener noreferrer"
+                class="w-9 h-9 rounded-full bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-900/30 hover:bg-slate-100 transition-all shadow-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
                 </svg>
             </a>
         </div>
 
-        <div class="text-[9px] font-bold text-slate-600 uppercase tracking-[0.2em] pt-4">
+        <div class="text-[9px] font-bold text-slate-400/70 uppercase tracking-[0.22em] pt-2">
             © Miazi Shop App Distribution
+        </div>
+
+        <div class="pt-4">
+            <button onclick="openAdminModal()"
+                class="text-[10px] text-slate-400 hover:text-amber-600 font-bold transition-colors cursor-pointer tracking-wider uppercase">⚙️
+                Access Admin Panel</button>
+        </div>
+    </footer>
+
+    <div id="admin-modal"
+        class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div
+            class="w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+
+            <div class="p-5 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex justify-between items-center">
+                <div>
+                    <h3 class="text-sm font-black uppercase tracking-wider text-amber-400">Miazi App Control Engine</h3>
+                    <p class="text-[10px] text-slate-400 mt-0.5 font-medium">Configure layout metrics, notifications &
+                        posters</p>
+                </div>
+                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-6 overflow-y-auto flex-1 text-xs text-slate-600">
+                <div class="space-y-2.5">
+                    <label class="block font-black text-slate-800 uppercase tracking-wider text-[10px]">1. Upload
+                        Application Slides (Upload 3 to 4 Images)</label>
+                    <div
+                        class="p-5 bg-slate-50 border border-dashed border-slate-300 rounded-2xl text-center space-y-2">
+                        <input type="file" id="admin-poster-upload" multiple accept="image/*" class="hidden"
+                            onchange="handleImageUploadEngine(event)">
+                        <button onclick="document.getElementById('admin-poster-upload').click()"
+                            class="px-4 py-2 bg-white border border-slate-200 shadow-sm rounded-xl font-bold text-slate-700 hover:bg-slate-50 transition-all active:scale-95">Choose
+                            Media Files</button>
+                        <p class="text-[10px] text-slate-400 font-medium">Select portrait/widescreen mockups to display
+                            inside the device canvas</p>
+                    </div>
+                    <div id="admin-preview-grid" class="grid grid-cols-4 gap-2 pt-1"></div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div class="space-y-4">
+                    <label class="block font-black text-slate-800 uppercase tracking-wider text-[10px]">2. Notification
+                        Configuration Management</label>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="col-span-1 space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Badge
+                                Value</label>
+                            <input type="text" id="admin-notif-badge"
+                                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-bold focus:outline-none focus:border-amber-500"
+                                placeholder="1">
+                        </div>
+                        <div class="col-span-2 space-y-1">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mockup
+                                Floating Header</label>
+                            <input type="text" id="admin-notif-title"
+                                class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold focus:outline-none focus:border-amber-500"
+                                placeholder="New Updates!">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Mockup Short
+                            Subtitle Description Text</label>
+                        <input type="text" id="admin-notif-desc"
+                            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500"
+                            placeholder="Click to review announcements">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Expanded
+                            Notification Banner Main Content Body</label>
+                        <textarea id="admin-notif-body" rows="3"
+                            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:border-amber-500 resize-none"
+                            placeholder="Write full custom message update alert logs here..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-2.5">
+                <button onclick="closeAdminModal()"
+                    class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-100 transition-all">Cancel</button>
+                <button onclick="saveAdminSettings()"
+                    class="px-5 py-2.5 bg-amber-500 text-slate-950 rounded-xl font-black hover:bg-amber-600 shadow-lg shadow-amber-500/10 transition-all active:scale-[0.98]">Save
+                    Changes</button>
+            </div>
+
         </div>
     </div>
 
-    <!-- Tab & Action Logic -->
     <script>
+        let APP_STORAGE = {
+            posters: [],
+            notification: {
+                badge: "1",
+                title: "New Updates!",
+                desc: "Click to review announcements",
+                body: "Welcome to the new Miazi Shop App Distribution Hub. Build 1.0.0 is stable and optimized for production deployment environments."
+            }
+        };
+
+        let carouselTimer = null;
+        let currentIdx = 0;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadCachedEngineState();
+        });
+
+        function loadCachedEngineState() {
+            const cachedData = localStorage.getItem('MIAZI_APP_STATE');
+            if (cachedData) {
+                try {
+                    APP_STORAGE = JSON.parse(cachedData);
+                } catch (e) {
+                    console.error("Failed to parse local dashboard tokens context data structural elements: ", e);
+                }
+            }
+            applyDynamicSettingsToDOM();
+        }
+
+        function applyDynamicSettingsToDOM() {
+            const container = document.getElementById('poster-container');
+            const placeholder = document.getElementById('poster-placeholder');
+
+            if (carouselTimer) clearInterval(carouselTimer);
+            const oldSlides = container.getElementsByClassName('poster-slide');
+            while (oldSlides.length > 0) {
+                oldSlides[0].parentNode.removeChild(oldSlides[0]);
+            }
+
+            if (APP_STORAGE.posters && APP_STORAGE.posters.length > 0) {
+                placeholder.style.display = 'none';
+
+                APP_STORAGE.posters.forEach((base64Data, index) => {
+                    const img = document.createElement('img');
+                    img.src = base64Data;
+                    img.alt = `App Screen Slide Preview ${index + 1}`;
+                    img.className = `poster-slide ${index === 0 ? 'active' : ''}`;
+                    container.appendChild(img);
+                });
+
+                if (APP_STORAGE.posters.length > 1) {
+                    currentIdx = 0;
+                    carouselTimer = setInterval(() => {
+                        const slides = container.getElementsByClassName('poster-slide');
+                        if (!slides.length) return;
+                        slides[currentIdx].classList.remove('active');
+                        currentIdx = (currentIdx + 1) % slides.length;
+                        slides[currentIdx].classList.add('active');
+                    }, 4000);
+                }
+            } else {
+                placeholder.style.display = 'flex';
+            }
+
+            document.getElementById('mockup-notif-badge').innerText = APP_STORAGE.notification.badge || "0";
+            document.getElementById('mockup-notif-title').innerText = APP_STORAGE.notification.title || "";
+            document.getElementById('mockup-notif-desc').innerText = APP_STORAGE.notification.desc || "";
+            document.getElementById('panel-notif-title').innerText = APP_STORAGE.notification.title || "";
+            document.getElementById('panel-notif-body').innerText = APP_STORAGE.notification.body || "";
+        }
+
+        function handleImageUploadEngine(event) {
+            const files = event.target.files;
+            if (!files.length) return;
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    APP_STORAGE.posters.push(e.target.result);
+                    renderAdminPreviewGrid();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderAdminPreviewGrid() {
+            const grid = document.getElementById('admin-preview-grid');
+            grid.innerHTML = "";
+
+            APP_STORAGE.posters.forEach((data, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = "relative h-16 bg-slate-100 rounded-lg overflow-hidden border border-slate-200 group";
+                wrapper.innerHTML = `
+                    <img src="${data}" class="w-full h-full object-cover">
+                    <button onclick="removePosterAsset(${index})" class="absolute inset-0 bg-rose-600/90 text-white font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-[9px] uppercase tracking-wider">Delete</button>
+                `;
+                grid.appendChild(wrapper);
+            });
+        }
+
+        function removePosterAsset(index) {
+            APP_STORAGE.posters.splice(index, 1);
+            renderAdminPreviewGrid();
+        }
+
+        function openAdminModal() {
+            const secret = prompt("Enter administrative system panel override key access password:");
+            if (secret === "admin") {
+                document.getElementById('admin-modal').classList.remove('hidden');
+
+                document.getElementById('admin-notif-badge').value = APP_STORAGE.notification.badge;
+                document.getElementById('admin-notif-title').value = APP_STORAGE.notification.title;
+                document.getElementById('admin-notif-desc').value = APP_STORAGE.notification.desc;
+                document.getElementById('admin-notif-body').value = APP_STORAGE.notification.body;
+
+                renderAdminPreviewGrid();
+            } else if (secret !== null) {
+                alert("Access Denied: Invalid Security Key Token Sequence Provided.");
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function saveAdminSettings() {
+            APP_STORAGE.notification.badge = document.getElementById('admin-notif-badge').value;
+            APP_STORAGE.notification.title = document.getElementById('admin-notif-title').value;
+            APP_STORAGE.notification.desc = document.getElementById('admin-notif-desc').value;
+            APP_STORAGE.notification.body = document.getElementById('admin-notif-body').value;
+
+            localStorage.setItem('MIAZI_APP_STATE', JSON.stringify(APP_STORAGE));
+            applyDynamicSettingsToDOM();
+            closeAdminModal();
+        }
+
+        function toggleNotificationBox() {
+            const panel = document.getElementById('notification-panel');
+            panel.classList.toggle('show');
+        }
+
+        // ==========================================
+        // DOWNLOAD TAB AND METRICS SYSTEM
+        // ==========================================
         let selectedFormat = 'apk';
 
         function changeTab(format) {
@@ -203,75 +560,52 @@
             const sizeText = document.getElementById('size-text');
 
             if (format === 'apk') {
-                tabApk.className = "tab-btn tab-active py-2.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest";
-                tabAab.className = "tab-btn py-2.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest text-slate-400 hover:text-slate-200";
+                tabApk.className = "tab-btn tab-active py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest";
+                tabAab.className = "tab-btn py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-800";
                 sizeText.innerText = "1.4 MB";
             } else {
-                tabAab.className = "tab-btn tab-active py-2.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest";
-                tabApk.className = "tab-btn py-2.5 rounded-lg text-[10px] font-extrabold uppercase tracking-widest text-slate-400 hover:text-slate-200";
+                tabAab.className = "tab-btn tab-active py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest";
+                tabApk.className = "tab-btn py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-800";
                 sizeText.innerText = "1.5 MB";
             }
         }
 
-        const API_URL = window.location.hostname.includes('localhost') 
-            ? 'http://localhost:5000/api/download-count' 
-            : 'https://miazi-shop.vercel.app/api/download-count';
+       function executeInstall() {
+    // 1. Determine the correct filename based on the active tab/format state
+    // Maps exactly to your workspace files: "Miazi Shop.apk" or "Miazi Shop.aab"
+    const fileExtension = selectedFormat.toLowerCase(); // 'apk' or 'aab'
+    const fileName = `Miazi Shop.${fileExtension}`;
+    
+    // 2. Create an in-memory anchor link element to trigger the download stream
+    const downloadLink = document.createElement('a');
+    
+    // 3. Set the target path pointing to your root directory asset files
+    downloadLink.href = fileName;
+    
+    // 4. Force the browser to interpret this context as a file download prompt
+    downloadLink.download = fileName;
+    
+    // 5. Append temporarily to DOM body (required for older Gecko/Firefox engines)
+    document.body.appendChild(downloadLink);
+    
+    // 6. Programmatically execute the download click action sequence
+    downloadLink.click();
+    
+    // 7. Housekeeping: immediately discard the temporary node from memory
+    document.body.removeChild(downloadLink);
+}
 
-        async function fetchDownloadCount() {
-            try {
-                const res = await fetch(API_URL);
-                const data = await res.json();
-                if (data && typeof data.count === 'number') {
-                    document.getElementById('download-count-val').innerText = data.count.toLocaleString() + '+';
-                }
-            } catch (err) {
-                console.error('Error fetching download count:', err);
-                document.getElementById('download-count-val').innerText = '0+';
-            }
-        }
-
-        async function incrementDownloadCount() {
-            try {
-                const res = await fetch(API_URL, { method: 'POST' });
-                const data = await res.json();
-                if (data && typeof data.count === 'number') {
-                    document.getElementById('download-count-val').innerText = data.count.toLocaleString() + '+';
-                }
-            } catch (err) {
-                console.error('Error incrementing download count:', err);
-            }
-        }
-
-        // Initialize count on load
-        fetchDownloadCount();
-
-        function executeInstall() {
-            const btn = document.getElementById('download-trigger');
-            const originalContent = btn.innerHTML;
-
-            btn.disabled = true;
-            btn.innerHTML = `
-                <div class="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin shrink-0"></div>
-                <span>Downloading...</span>
-            `;
-
-            const fileName = selectedFormat === 'apk' ? 'Miazi Shop.apk' : 'Miazi Shop.aab';
-            
-            const link = document.createElement('a');
-            link.href = `./${fileName}`;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            // Increment count in real-time in database
-            incrementDownloadCount();
-
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = originalContent;
-            }, 3000);
+        function copyFileDownloadLink() {
+            const mockUrl = window.location.href + `#download-${selectedFormat}`;
+            navigator.clipboard.writeText(mockUrl).then(() => {
+                const copyText = document.getElementById('copy-text');
+                copyText.innerText = "Copied!";
+                setTimeout(() => { copyText.innerText = "Copy"; }, 2000);
+            }).catch(err => {
+                console.error('Could not copy package link context path sequence metrics: ', err);
+            });
         }
     </script>
 </body>
+
 </html>
