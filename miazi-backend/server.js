@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URL);
 const isProduction = process.env.NODE_ENV === 'production';
 
 const BASE_URL = isProduction
-    ? "https://www.miazishop.info"
+    ? "https://miazi-shop-web.vercel.app"
     : "http://localhost:5000";
 
 
@@ -30,12 +30,12 @@ app.use(express.json());
 // CORS (production-safe)
 app.use(cors({
     origin: [
-        "http://localhost:3000",
+        "https://www.miazishop.info",
+        "https://miazi-shop-web.vercel.app",
         "http://127.0.0.1:5500",
-        "https://www.miazishop.info"
+        "http://localhost:3000"
     ]
 }));
-
 
 // serve uploads publicly
 app.use('/uploads', express.static('uploads'));

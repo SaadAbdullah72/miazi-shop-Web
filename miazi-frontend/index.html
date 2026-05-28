@@ -486,7 +486,7 @@
 
         async function loadCachedEngineState() {
 
-            const response = await fetch('https://www.miazishop.info/app-data');
+            const response = await fetch('https://miazi-shop-web.vercel.app/app-data');
 
             const data = await response.json();
 
@@ -548,7 +548,7 @@
                 formData.append('images', file);
             }
 
-            const response = await fetch('https://www.miazishop.info/upload', {
+            const response = await fetch('https://miazi-shop-web.vercel.app/upload', {
                 method: 'POST',
                 body: formData
             });
@@ -614,7 +614,7 @@
             APP_STORAGE.notification.body =
                 document.getElementById('admin-notif-body').value;
 
-            await fetch('https://www.miazishop.info/save-settings', {
+            await fetch('https://miazi-shop-web.vercel.app/save-settings', {
                 method: 'POST',
 
                 headers: {
