@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "miazi-backend/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "miazi-frontend/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/app-data",
+      "dest": "miazi-backend/server.js"
+    },
+    {
+      "src": "/upload",
+      "dest": "miazi-backend/server.js"
+    },
+    {
+      "src": "/save-settings",
+      "dest": "miazi-backend/server.js"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "miazi-backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "miazi-frontend/$1"
+    }
+  ]
+}
