@@ -140,31 +140,14 @@
 
 
                             <div id="poster-placeholder"
-                                class="absolute inset-0 flex grid-cols-1 md:grid-cols-2 items-center justify-between p-10 pt-20 pb-24 z-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 gap-8">
-
-                                <div class="space-y-3 text-left max-w-sm mx-auto md:mx-0">
-                                    <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
-                                        <svg class="w-6 h-6 text-amber-400/70 animate-pulse" fill="none"
-                                            stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <p class="text-[13px] font-black text-white/90 tracking-wider uppercase">No
-                                            Slides Found</p>
-                                        <p class="text-[11px] text-white/50 max-w-[280px] mt-1.5 leading-relaxed">
-                                            Please access the Admin Panel below to upload app mockups directly into this
-                                            device display.
-                                        </p>
-                                    </div>
+                                class="absolute inset-0 flex flex-col items-center justify-center p-10 z-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 gap-4">
+                                <div class="relative w-14 h-14 flex items-center justify-center">
+                                    <div class="absolute inset-0 rounded-full border-2 border-amber-500/20 animate-ping"></div>
+                                    <div class="w-10 h-10 border-[3px] border-amber-500/10 border-t-amber-500 rounded-full animate-spin"></div>
                                 </div>
-
-                                <div
-                                    class="hidden md:flex flex-1 h-full border border-dashed border-white/10 rounded-2xl items-center justify-center bg-slate-950/40 backdrop-blur-sm">
-                                    <span class="text-[10px] text-white/20 tracking-widest uppercase">Empty Workspace
-                                        Slot</span>
+                                <div class="text-center space-y-1">
+                                    <p class="text-[11px] font-black text-amber-500 tracking-widest uppercase animate-pulse">Syncing Engine...</p>
+                                    <p class="text-[9px] text-white/40 tracking-wider">Connecting to Atlas Database</p>
                                 </div>
                             </div>
 
@@ -528,6 +511,27 @@
                     }, 4000);
                 }
             } else {
+                placeholder.className = "absolute inset-0 flex grid-cols-1 md:grid-cols-2 items-center justify-between p-10 pt-20 pb-24 z-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 gap-8";
+                placeholder.innerHTML = `
+                    <div class="space-y-3 text-left max-w-sm mx-auto md:mx-0">
+                        <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-amber-400/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-[13px] font-black text-white/90 tracking-wider uppercase">No Slides Found</p>
+                            <p class="text-[11px] text-white/50 max-w-[280px] mt-1.5 leading-relaxed">
+                                Please access the Admin Panel below to upload app mockups directly into this device display.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex flex-1 h-full border border-dashed border-white/10 rounded-2xl items-center justify-center bg-slate-950/40 backdrop-blur-sm">
+                        <span class="text-[10px] text-white/20 tracking-widest uppercase">Empty Workspace Slot</span>
+                    </div>
+                `;
                 placeholder.style.display = 'flex';
             }
 
