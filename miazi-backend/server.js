@@ -67,15 +67,7 @@ const AppData = mongoose.model('AppData', AppSchema);
 // =====================
 // MULTER CONFIG
 // =====================
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
@@ -116,21 +108,25 @@ app.get('/app-data', async (req, res) => {
 // UPLOAD POSTERS
 // =====================
 app.post('/upload', upload.array('images'), async (req, res) => {
+    try {
+        const data = await getGlobalData();
 
-    const data = await getGlobalData();
+        const base64Images = req.files.map(file =>
+            `data:${file.mimetype};base64,${file.buffer.toString('base64')}`
+        );
 
-    const imageUrls = req.files.map(file =>
-        `${BASE_URL}/uploads/${file.filename}`
-    );
+        data.posters = base64Images;
 
-    data.posters = imageUrls;
+        await data.save();
 
-    await data.save();
-
-    res.json({
-        success: true,
-        posters: imageUrls
-    });
+        res.json({
+            success: true,
+            posters: base64Images
+        });
+    } catch (error) {
+        console.error("Upload error:", error);
+        res.status(500).json({ success: false, error: error.message });
+    }
 });
 
 
