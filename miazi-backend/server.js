@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect('mongodb+srv://<huzaifajavid7532>:<huzaifa7532>@cluster.jfqgf4b.mongodb.net/');
+mongoose.connect(process.env.MONGO_URL);
 
 
 // =====================
@@ -44,7 +44,7 @@ app.use('/uploads', express.static('uploads'));
 // =====================
 // MONGODB
 // =====================
-mongoose.connect('mongodb://127.0.0.1:27017/miazi');
+// mongoose.connect('mongodb://127.0.0.1:27017/miazi');
 
 
 // =====================
