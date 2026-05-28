@@ -467,16 +467,39 @@
             setInterval(loadCachedEngineState, 5000);
         });
 
+        function arraysEqual(a, b) {
+            if (a === b) return true;
+            if (a == null || b == null) return false;
+            if (a.length !== b.length) return false;
+            for (let i = 0; i < a.length; ++i) {
+                if (a[i] !== b[i]) return false;
+            }
+            return true;
+        }
+
         async function loadCachedEngineState() {
+            try {
+                const response = await fetch('/app-data');
+                const data = await response.json();
 
-            const response = await fetch('/app-data');
+                const newPosters = data.posters || [];
+                const newNotif = data.notification || {};
 
-            const data = await response.json();
+                const postersChanged = !arraysEqual(APP_STORAGE.posters, newPosters);
+                const notifChanged = 
+                    APP_STORAGE.notification.badge !== newNotif.badge ||
+                    APP_STORAGE.notification.title !== newNotif.title ||
+                    APP_STORAGE.notification.desc !== newNotif.desc ||
+                    APP_STORAGE.notification.body !== newNotif.body;
 
-            APP_STORAGE.posters = data.posters || [];
-            APP_STORAGE.notification = data.notification || {};
-
-            applyDynamicSettingsToDOM();
+                if (postersChanged || notifChanged) {
+                    APP_STORAGE.posters = newPosters;
+                    APP_STORAGE.notification = newNotif;
+                    applyDynamicSettingsToDOM();
+                }
+            } catch (err) {
+                console.error("Failed to load engine state:", err);
+            }
         }
 
         function applyDynamicSettingsToDOM() {
