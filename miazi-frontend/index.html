@@ -471,7 +471,7 @@
 
         async function loadDownloadCount() {
     try {
-        const response = await fetch('https://miazi-shop-web.vercel.app//download-count');
+        const response = await fetch('https://miazi-shop-web.vercel.app/download-count');
         const data = await response.json();
 
         document.getElementById('download-count-val').innerText =
@@ -702,7 +702,7 @@
        
           function executeInstall() {
   const BASE_URL = "https://miazi-shop-web.vercel.app/";
-  window.location.href = `${BASE_URL}/download/${selectedFormat}`;
+  window.location.href = `${BASE_URL}/${selectedFormat}`;
 }
 setInterval(loadDownloadCount, 5000);
         
