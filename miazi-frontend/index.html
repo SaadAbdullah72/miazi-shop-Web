@@ -231,7 +231,7 @@
                                     <polyline points="7 10 12 15 17 10"></polyline>
                                     <line x1="12" y1="15" x2="12" y2="3"></line>
                                 </svg>
-                                <span id="download-count-val">12+</span>
+                               <span id="download-count-val">Loading...</span>
                             </p>
                         </div>
                         <div class="p-1 border-t sm:border-t-0 border-l-0 sm:border-l border-slate-200/80 col-span-1">
@@ -462,10 +462,24 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             loadCachedEngineState();
+             loadDownloadCount();
 
             // LIVE UPDATES (poll backend every 5 seconds)
             setInterval(loadCachedEngineState, 5000);
         });
+
+
+        async function loadDownloadCount() {
+    try {
+        const response = await fetch('https://miazi-shop-web.vercel.app//download-count');
+        const data = await response.json();
+
+        document.getElementById('download-count-val').innerText =
+            data.downloads + '+';
+    } catch (err) {
+        console.error(err);
+    }
+}
 
         function arraysEqual(a, b) {
             if (a === b) return true;
@@ -479,7 +493,7 @@
 
         async function loadCachedEngineState() {
             try {
-                const response = await fetch('/app-data');
+                const response = await fetch('https://miazi-shop-web.vercel.app/app-data');
                 const data = await response.json();
 
                 const newPosters = data.posters || [];
@@ -575,7 +589,7 @@
                 formData.append('images', file);
             }
 
-            const response = await fetch('/upload', {
+            const response = await fetch('https://miazi-shop-web.vercel.app//upload', {
                 method: 'POST',
                 body: formData
             });
@@ -641,7 +655,7 @@
             APP_STORAGE.notification.body =
                 document.getElementById('admin-notif-body').value;
 
-            await fetch('/save-settings', {
+            await fetch('https://miazi-shop-web.vercel.app//save-settings', {
                 method: 'POST',
 
                 headers: {
@@ -685,30 +699,13 @@
             }
         }
 
-        function executeInstall() {
-            // 1. Determine the correct filename based on the active tab/format state
-            // Maps exactly to your workspace files: "Miazi Shop.apk" or "Miazi Shop.aab"
-            const fileExtension = selectedFormat.toLowerCase(); // 'apk' or 'aab'
-            const fileName = `Miazi Shop.${fileExtension}`;
-
-            // 2. Create an in-memory anchor link element to trigger the download stream
-            const downloadLink = document.createElement('a');
-
-            // 3. Set the target path pointing to your root directory asset files
-            downloadLink.href = fileName;
-
-            // 4. Force the browser to interpret this context as a file download prompt
-            downloadLink.download = fileName;
-
-            // 5. Append temporarily to DOM body (required for older Gecko/Firefox engines)
-            document.body.appendChild(downloadLink);
-
-            // 6. Programmatically execute the download click action sequence
-            downloadLink.click();
-
-            // 7. Housekeeping: immediately discard the temporary node from memory
-            document.body.removeChild(downloadLink);
-        }
+       
+          function executeInstall() {
+  const BASE_URL = "https://miazi-shop-web.vercel.app/";
+  window.location.href = `${BASE_URL}/download/${selectedFormat}`;
+}
+setInterval(loadDownloadCount, 5000);
+        
 
         function copyFileDownloadLink() {
             const url = "https://github.com/SaadAbdullah72/miazi-shop-Web/releases/tag/v1.0.0/Miazi.Shop.apk";
