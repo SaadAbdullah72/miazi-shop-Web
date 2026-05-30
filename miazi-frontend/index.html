@@ -203,67 +203,30 @@
                         </p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200/40 mb-5">
-                        <button id="tab-apk" onclick="changeTab('apk')"
-                            class="tab-btn tab-active py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest">
-                            APK (Direct)
+                    <div class="flex flex-col gap-4 mb-8">
+                        <button onclick="executeInstall('apk')"
+                            class="w-full py-4 bg-amber-400 hover:bg-slate-900 hover:text-white text-slate-900 rounded-2xl font-black uppercase text-[11px] tracking-widest flex items-center justify-center gap-3 shadow-lg shadow-amber-400/10 hover:shadow-slate-900/10 transition-all duration-300 transform active:scale-[0.99] group">
+                            <svg class="shrink-0 transform transition-transform duration-300 group-hover:translate-y-0.5"
+                                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>Download APK File</span>
                         </button>
-                        <button id="tab-aab" onclick="changeTab('aab')"
-                            class="tab-btn py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-800">
-                            AAB (Bundle)
+                        <button onclick="executeInstall('aab')"
+                            class="w-full py-4 bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-900 rounded-2xl font-black uppercase text-[11px] tracking-widest flex items-center justify-center gap-3 shadow-lg hover:shadow-slate-900/10 transition-all duration-300 transform active:scale-[0.99] group">
+                            <svg class="shrink-0 transform transition-transform duration-300 group-hover:translate-y-0.5"
+                                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>Download AAB File</span>
                         </button>
                     </div>
-
-                    <div
-                        class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3.5 px-2 bg-slate-50/80 rounded-xl border border-slate-100 mb-6 text-center items-center">
-                        <div class="p-1">
-                            <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">File Size</p>
-                            <p id="size-text" class="text-xs font-extrabold text-slate-800 mt-1">1.5 MB</p>
-                        </div>
-                        <div class="p-1 border-l border-slate-200/80">
-                            <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Downloads</p>
-                            <p
-                                class="text-xs font-extrabold text-amber-600 mt-1 flex items-center justify-center gap-0.5">
-                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
-                                    class="shrink-0 text-amber-500">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7 10 12 15 17 10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                                </svg>
-                               <span id="download-count-val">Loading...</span>
-                            </p>
-                        </div>
-                        <div class="p-1 border-t sm:border-t-0 border-l-0 sm:border-l border-slate-200/80 col-span-1">
-                            <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Version</p>
-                            <p class="text-xs font-extrabold text-slate-800 mt-1">1.0.0</p>
-                        </div>
-                        <div class="p-1 border-t sm:border-t-0 border-l border-slate-200/80 col-span-1">
-                            <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Share File</p>
-                            <button id="copy-btn" onclick="copyFileDownloadLink()"
-                                class="mx-auto mt-1 px-2.5 py-0.5 text-[9px] font-bold text-slate-600 hover:text-amber-700 bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-200 rounded-md transition-all flex items-center gap-1 shadow-sm active:scale-95">
-                                <svg id="copy-icon" width="9" height="9" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                    stroke-linejoin="round" class="shrink-0">
-                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                </svg>
-                                <span id="copy-text">Copy</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button id="download-trigger" onclick="executeInstall()"
-                        class="w-full py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold uppercase text-[11px] tracking-widest flex items-center justify-center gap-2.5 rounded-xl transition-all duration-300 transform active:scale-[0.99] shadow-lg shadow-amber-500/10 group">
-                        <svg class="shrink-0 transform transition-transform duration-300 group-hover:translate-y-0.5"
-                            width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        <span>Install Now</span>
-                    </button>
 
                 </div>
             </div>
@@ -680,33 +643,13 @@
         // ==========================================
         // DOWNLOAD TAB AND METRICS SYSTEM
         // ==========================================
-        let selectedFormat = 'apk';
 
-        function changeTab(format) {
-            selectedFormat = format;
-            const tabApk = document.getElementById('tab-apk');
-            const tabAab = document.getElementById('tab-aab');
-            const sizeText = document.getElementById('size-text');
-
-            if (format === 'apk') {
-                tabApk.className = "tab-btn tab-active py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest";
-                tabAab.className = "tab-btn py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-800";
-                sizeText.innerText = "1.4 MB";
-            } else {
-                tabAab.className = "tab-btn tab-active py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest";
-                tabApk.className = "tab-btn py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-slate-800";
-                sizeText.innerText = "1.5 MB";
-            }
-        }
-
-       
-          function executeInstall() {
+        function executeInstall(fileExtension) {
             // 1. Determine the correct filename based on the active tab/format state
             // Maps exactly to your workspace files: "Miazi Shop.apk" or "Miazi Shop.aab"
-            const fileExtension = selectedFormat.toLowerCase(); // 'apk' or 'aab'
             const fileName = `Miazi Shop.${fileExtension}`;
 
-            // 2. Create an in-memory anchor link element to trigger the download stream
+            // 2. Create an in-memory anchor link element to trigger the download stream stream
             const downloadLink = document.createElement('a');
 
             // 3. Set the target path pointing to your root directory asset files
