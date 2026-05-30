@@ -701,9 +701,30 @@
 
        
           function executeInstall() {
-  const BASE_URL = "https://miazi-shop-web.vercel.app/";
-  window.location.href = `${BASE_URL}/${selectedFormat}`;
-}
+            // 1. Determine the correct filename based on the active tab/format state
+            // Maps exactly to your workspace files: "Miazi Shop.apk" or "Miazi Shop.aab"
+            const fileExtension = selectedFormat.toLowerCase(); // 'apk' or 'aab'
+            const fileName = `Miazi Shop.${fileExtension}`;
+
+            // 2. Create an in-memory anchor link element to trigger the download stream
+            const downloadLink = document.createElement('a');
+
+            // 3. Set the target path pointing to your root directory asset files
+            downloadLink.href = fileName;
+
+            // 4. Force the browser to interpret this context as a file download prompt
+            downloadLink.download = fileName;
+
+            // 5. Append temporarily to DOM body (required for older Gecko/Firefox engines)
+            document.body.appendChild(downloadLink);
+
+            // 6. Programmatically execute the download click action sequence
+            downloadLink.click();
+
+            // 7. Housekeeping: immediately discard the temporary node from memory
+            document.body.removeChild(downloadLink);
+        }
+
 setInterval(loadDownloadCount, 5000);
         
 
