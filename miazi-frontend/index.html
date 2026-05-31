@@ -684,27 +684,17 @@
         // ==========================================
 
         function executeInstall(fileExtension) {
-            // 1. Determine the correct filename based on the active tab/format state
-            // Maps exactly to your workspace files: "Miazi Shop.apk" or "Miazi Shop.aab"
-            const fileName = `Miazi Shop.${fileExtension}`;
+            // Hit the backend endpoint to increment download count
+            // The backend will then redirect the browser to the actual APK/AAB file
+            const backendUrl = `https://miazi-shop-web.vercel.app/download/${fileExtension}`;
+            
+            // Open the download link
+            window.location.href = backendUrl;
 
-            // 2. Create an in-memory anchor link element to trigger the download stream stream
-            const downloadLink = document.createElement('a');
-
-            // 3. Set the target path pointing to your root directory asset files
-            downloadLink.href = fileName;
-
-            // 4. Force the browser to interpret this context as a file download prompt
-            downloadLink.download = fileName;
-
-            // 5. Append temporarily to DOM body (required for older Gecko/Firefox engines)
-            document.body.appendChild(downloadLink);
-
-            // 6. Programmatically execute the download click action sequence
-            downloadLink.click();
-
-            // 7. Housekeeping: immediately discard the temporary node from memory
-            document.body.removeChild(downloadLink);
+            // Wait a moment then refresh the UI metrics to show the new count
+            setTimeout(() => {
+                loadDownloadCount();
+            }, 3000);
         }
 
 setInterval(loadDownloadCount, 5000);
