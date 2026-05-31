@@ -16,6 +16,14 @@
       "dest": "miazi-backend/server.js"
     },
     {
+      "src": "/download-count",
+      "dest": "miazi-backend/server.js"
+    },
+    {
+      "src": "/download/(.*)",
+      "dest": "miazi-backend/server.js"
+    },
+    {
       "src": "/upload",
       "dest": "miazi-backend/server.js"
     },
